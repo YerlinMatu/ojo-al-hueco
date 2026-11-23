@@ -1,0 +1,12 @@
+{
+  "name": "ojo-al-hueco-el-lucero",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Prototipo comunitario de reporte y seguimiento de daños viales — reconstrucción para GitHub Pages",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "engines": {"node": ">=18"}
+}

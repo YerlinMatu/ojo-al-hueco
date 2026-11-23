@@ -1,0 +1,30 @@
+{
+  "proyecto": "Ojo al Hueco — reconstrucción para GitHub Pages",
+  "fecha_generacion": "2026-11-22",
+  "naturaleza": "Pruebas del código reconstruido; no equivalen a evidencia del prototipo original ni a pruebas de campo",
+  "ejecucion": "npm test",
+  "framework": "node:test",
+  "total": 18,
+  "aprobadas": 18,
+  "fallidas": 0,
+  "suites": {
+    "E2_agrupacion_geoespacial": {
+      "controles": 6,
+      "aprobados": 6
+    },
+    "E3_orientacion_canal": {
+      "controles": 6,
+      "aprobados": 6
+    },
+    "E4_integridad_trazabilidad": {
+      "controles": 6,
+      "aprobados": 6
+    }
+  },
+  "limitaciones": [
+    "Los datos del mapa son ficticios",
+    "No se validó integración institucional",
+    "No se probó adopción con usuarios reales",
+    "Solo se realizaron pruebas unitarias, no pruebas automatizadas de navegador"
+  ]
+}

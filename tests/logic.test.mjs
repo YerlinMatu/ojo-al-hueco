@@ -1,0 +1,25 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {distanceMeters,findNearbyReports,routeReport,validateReport,createReport,createTimelineEvent,supportReport,escapeHtml,DUPLICATE_RADIUS_METERS} from '../logic.js';
+const point={lat:4.5523,lng:-74.1448};
+const input={damageType:'Hueco',description:'Hueco peligroso en la calzada',roadType:'Local',...point,photo:'data:image/jpeg;base64,YQ=='};
+const report={id:'CASE1',status:'Pendiente de radicación',...point,supports:1};
+// 18 controles para los tres flujos indicados en el documento de proyecto.
+test('E2-01: distancia cero en mismo punto',()=>assert.equal(distanceMeters(point,point),0));
+test('E2-02: detecta reporte a menos de 50 m',()=>assert.equal(findNearbyReports([report],{lat:point.lat+.0001,lng:point.lng}).length,1));
+test('E2-03: no detecta reporte a más de 50 m',()=>assert.equal(findNearbyReports([report],{lat:point.lat+.002,lng:point.lng}).length,0));
+test('E2-04: ignora casos resueltos',()=>assert.equal(findNearbyReports([{...report,status:'Resuelto'}],point).length,0));
+test('E2-05: ordena cercanos por distancia',()=>assert.equal(findNearbyReports([{...report,id:'far',lat:point.lat+.0002},{...report,id:'close',lat:point.lat+.0001}],point)[0].id,'close'));
+test('E2-06: umbral configurable de duplicados',()=>assert.equal(DUPLICATE_RADIUS_METERS,50));
+test('E3-01: alcantarillado local sugiere EAAB',()=>assert.match(routeReport({roadType:'Local',damageType:'Alcantarillado'}).entity,/Acueducto/));
+test('E3-02: alcantarillado arterial sugiere EAAB',()=>assert.match(routeReport({roadType:'Arterial',damageType:'Alcantarillado'}).entity,/Acueducto/));
+test('E3-03: hueco arterial sugiere IDU',()=>assert.match(routeReport({roadType:'Arterial',damageType:'Hueco'}).entity,/IDU/));
+test('E3-04: hueco local sugiere UMV',()=>assert.match(routeReport({roadType:'Local',damageType:'Hueco'}).entity,/UMV/));
+test('E3-05: hundimiento arterial sugiere IDU',()=>assert.match(routeReport({roadType:'Arterial',damageType:'Hundimiento'}).entity,/IDU/));
+test('E3-06: tipo de vía desconocido tiene recomendación',()=>assert.ok(routeReport({roadType:'No sé',damageType:'Otro'}).reason));
+test('E4-01: acepta cinco campos válidos',()=>assert.deepEqual(validateReport(input),[]));
+test('E4-02: requiere foto',()=>assert.match(validateReport({...input,photo:null}).join(' '),/fotografía/));
+test('E4-03: exige descripción',()=>assert.match(validateReport({...input,description:'corta'}).join(' '),/descripción/));
+test('E4-04: exige coordenadas válidas',()=>assert.match(validateReport({...input,lat:150}).join(' '),/ubicación/));
+test('E4-05: crea historial con fuente y fecha',()=>{const r=createReport(input,new Date('2026-11-22T12:00:00Z'));assert.equal(r.timeline.length,2);assert.ok(r.timeline.every(e=>e.source&&e.at));});
+test('E4-06: evento inválido bloqueado; apoyo sin alterar original',()=>{assert.throws(()=>createTimelineEvent('Inventado'),/no válido/);const next=supportReport(report);assert.equal(next.supports,2);assert.equal(report.supports,1);assert.equal(escapeHtml('<script>'),'&lt;script&gt;');});
