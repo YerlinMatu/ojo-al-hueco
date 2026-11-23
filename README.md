@@ -1,7 +1,5 @@
 # Ojo al Hueco — Prototipo funcional para GitHub Pages
 
-> **Reconstrucción independiente** creada a partir de la descripción del proyecto académico *Ojo al Hueco* de la UPZ El Lucero (Bogotá). **No son los archivos originales de la conversación previa de ChatGPT Work.**
-
 Una web estática, responsiva y sin backend para explorar reportes, crear casos con fotografía y ubicación, identificar posibles duplicados en un radio de 50 metros, recibir una **sugerencia no oficial** de entidad competente, consultar una línea de tiempo, apoyar un caso y exportar un CSV comunitario.
 
 ## 1. Ejecutar localmente
