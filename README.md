@@ -35,48 +35,7 @@ Se incluyen **18 pruebas automatizadas** con el módulo nativo `node:test` de No
 
 El archivo `evidencia-pruebas.json` resume la suite. Para verificar el estado actual, ejecuta siempre `npm test`.
 
-## 3. Publicar en GitHub Pages
-
-1. Crea un repositorio nuevo, por ejemplo `ojo-al-hueco`.
-2. Sube **los archivos contenidos dentro de esta carpeta** a la raíz del repositorio (`index.html`, `app.js`, `logic.js`, `data.js`, `styles.css`, `assets/`, etc.). También puedes subir el directorio completo si ajustas la ubicación de publicación.
-3. En GitHub ve a **Settings → Pages → Build and deployment**.
-4. Selecciona **Deploy from a branch**, la rama `main` y la carpeta `/(root)`. Guarda los cambios.
-5. Cuando GitHub termine de publicar, tu aplicación estará en una dirección similar a `https://TU-USUARIO.github.io/ojo-al-hueco/`.
-
-Los archivos usan rutas relativas (`./`), por lo que funcionan en repositorios de proyecto y no requieren variables de entorno ni `npm run build`.
-
-### Subir desde terminal (alternativa)
-
-```bash
-git init
-git add .
-git commit -m "Add Ojo al Hueco static prototype"
-git branch -M main
-git remote add origin https://github.com/TU-USUARIO/ojo-al-hueco.git
-git push -u origin main
-```
-
-Crea el repositorio en GitHub antes de ejecutar el `push`, y cambia `TU-USUARIO` por tu nombre de usuario.
-
-## 4. Estructura
-
-```text
-ojo-al-hueco-github-pages/
-├── index.html              # UI principal y formularios
-├── styles.css              # Diseño responsivo
-├── app.js                  # Interacciones, mapa, almacenamiento y exportación
-├── logic.js                # Reglas puras del producto
-├── data.js                 # Datos ficticios y casos de demostración
-├── assets/logo.svg         # Isotipo original de esta reconstrucción
-├── tests/logic.test.mjs    # 18 controles automatizados
-├── evidencia-pruebas.json  # Metadatos y resultados registrados
-├── server.mjs              # Servidor de desarrollo sin dependencias
-├── package.json
-├── .nojekyll               # Publicación estática en GitHub Pages
-└── README.md
-```
-
-## 5. Qué funciona y cuáles son sus límites
+## Qué funciona y cuáles son sus límites
 
 | Funcionalidad | Estado |
 | --- | --- |
